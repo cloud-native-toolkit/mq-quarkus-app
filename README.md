@@ -17,7 +17,7 @@
 
 # MQ Client Java Quarkus microservice
 
-Sample MQ Client Java Spring Boot application.
+Sample MQ Client Java Quarkus application.
 
 ## Steps
 
