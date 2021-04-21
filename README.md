@@ -104,6 +104,17 @@ These properties can be set via environment variables instead.
 
 Added Logger to `GreetingResource.java` to illustrate log messages with trace IDs.
 
+When helm chart gets deployed, it injects env vars from the following resources:
+* config map:  jaeger-config
+* secret: jaeger-access
+
+In `jaeger-config` config map, included the property `quarkus.jaeger.endpoint` to point to the the jaeger collector api.  
+
+To install Jaeger, go to OperatorHub and install the `Red Hat Openshift Jaeger` operator.
+Jaeger will be installed in the `openshift-operators` project.
+
+See: https://quarkus.io/guides/opentracing
+
 #### OpenAPI and Swagger
 OpenAPI and Swagger support was added automatically with the `extensions="smallrye-openapi"` above.
 * Once your application is started, you can make a request to the `/q/openapi` endpoint to get the API Documentation.
