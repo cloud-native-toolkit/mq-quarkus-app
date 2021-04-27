@@ -91,7 +91,7 @@ public class MQClientResource {
         
         // For mTLS, this MQ client app needs to send a certificate to the MQM server
 		System.setProperty("javax.net.ssl.keyStore", keyStore);
-		System.setProperty("javax.net.ssl.keyStorePassword", "passw0rd");
+		System.setProperty("javax.net.ssl.keyStorePassword", keyStorePassword);
 		
         
         String activeProfile = ProfileManager.getActiveProfile();
@@ -100,7 +100,7 @@ public class MQClientResource {
         // This is required to setup a TLS connection with the MQM server
         
 		System.setProperty("javax.net.ssl.trustStore", trustStore);
-		System.setProperty("javax.net.ssl.trustStorePassword", "passw0rd");
+		System.setProperty("javax.net.ssl.trustStorePassword", trustStorePassword);
 
 
 		System.setProperty("com.ibm.mq.cfg.useIBMCipherMappings", "false");
