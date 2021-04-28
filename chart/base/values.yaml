@@ -60,5 +60,13 @@ configmap:
   PORT: 1414
 
 secret:
-  PASSWORD: cGFzc3cwcmQ=
-  USER: YXBw
+  PASSWORD: bXFhcHA=
+  USER: bXFhcHA=
+  
+certs:
+  volumeName: certs  
+  certSecretName: ibm-jks 
+  certPasswordSecretName: ibm-passwords
+  volumeMountPath: "/certs"
+  trustStoreFileName: ibm-ca.jks
+  keyStoreFileName: ibm-rest-server.jks
