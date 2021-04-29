@@ -65,8 +65,8 @@ secret:
   
 certs:
   volumeName: certs  
-  certSecretName: ibm-jks 
-  certPasswordSecretName: ibm-passwords
+  certSecretName: dev-jks-crt-secret 
+  certPasswordSecretName: jks-dev-pass
   volumeMountPath: "/certs"
-  trustStoreFileName: ibm-ca.jks
-  keyStoreFileName: ibm-rest-server.jks
+  trustStoreFileName: truststore.jks
+  keyStoreFileName: keystore.jks
