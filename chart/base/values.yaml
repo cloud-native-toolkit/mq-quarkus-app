@@ -52,15 +52,15 @@ connectsTo: ""
 runtime: quarkus
 
 configmap:
-  CHANNEL: DEV.APP.SVRCONN
+  CHANNEL: IBM.APP.SVRCONN
   QM: QUICKSTART
-  QUEUE_NAME: DEV.QUEUE.1
+  QUEUE_NAME: IBM.DEMO.Q
   APP_NAME: MQ-QUARKUS-APP
   HOST: qm-dev-ibm-mq.dev.svc.cluster.local
   PORT: 1414
 
 secret:
-  PASSWORD: bXFhcHA=
+  PASSWORD: YXBw
   USER: bXFhcHA=
   
 certs:
