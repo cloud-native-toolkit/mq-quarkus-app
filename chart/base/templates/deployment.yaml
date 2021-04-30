@@ -63,9 +63,6 @@ spec:
             httpGet:
               path: /
               port: http
-          envFrom:
-            - secretRef:
-                name: {{ .Values.certs.certPasswordSecretName }}            
           env:
             - name: INGRESS_HOST
               value: ""
@@ -124,6 +121,8 @@ spec:
             - secretRef:
                 name: {{ default "jaeger-access" .Values.jaegerSecretName }}
                 optional: true
+            - secretRef:
+                name: {{ .Values.certs.certPasswordSecretName }}                 
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
       {{- with .Values.nodeSelector }}
