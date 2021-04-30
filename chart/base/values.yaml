@@ -65,8 +65,8 @@ secret:
   
 certs:
   volumeName: certs  
-  certSecretName: dev-jks-crt-secret 
-  certPasswordSecretName: jks-dev-pass
+  certSecretName: jks-crt-secret 
+  certPasswordSecretName: jks-pass
   volumeMountPath: "/certs"
   trustStoreFileName: truststore.jks
   keyStoreFileName: keystore.jks
