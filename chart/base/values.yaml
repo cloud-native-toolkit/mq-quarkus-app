@@ -65,8 +65,8 @@ secret:
   
 certs:
   volumeName: certs  
-  certSecretName: jks-crt-secret 
-  certPasswordSecretName: jks-pass
+  certSecretName: mq-client-jks 
+  certPasswordSecretName: mq-client-jks-password
   volumeMountPath: "/certs"
   trustStoreFileName: truststore.jks
   keyStoreFileName: keystore.jks
