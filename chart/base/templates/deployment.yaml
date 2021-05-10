@@ -37,11 +37,20 @@ spec:
       imagePullSecrets:
         - name: {{ .Values.image.secretName }}
       {{- end }}
+      volumes:
+        - name: {{ .Values.certs.volumeName }}
+          secret:
+            secretName: {{ .Values.certs.certSecretName }}
+            defaultMode: 384
+            optional: false      
       containers:
         - name: {{ .Chart.Name }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
 
+          volumeMounts:
+            - name: {{ .Values.certs.volumeName }}
+              mountPath: {{ .Values.certs.volumeMountPath }}
           ports:
             - name: http
               containerPort: {{ .Values.image.port }}
@@ -61,6 +70,10 @@ spec:
               value: ""
             - name: LOG_LEVEL
               value: {{ .Values.logLevel | quote }}
+            - name: CLIENT_SSL_TRUST_STORE
+              value: {{ .Values.certs.volumeMountPath }}/{{ .Values.certs.trustStoreFileName }}
+            - name: CLIENT_SSL_KEY_STORE
+              value: {{ .Values.certs.volumeMountPath }}/{{ .Values.certs.keyStoreFileName }}                            
             - name: QM
               valueFrom:
                 configMapKeyRef:
@@ -108,6 +121,8 @@ spec:
             - secretRef:
                 name: {{ default "jaeger-access" .Values.jaegerSecretName }}
                 optional: true
+            - secretRef:
+                name: {{ .Values.certs.certPasswordSecretName }}                 
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
       {{- with .Values.nodeSelector }}

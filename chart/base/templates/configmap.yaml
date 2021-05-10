@@ -4,7 +4,6 @@ metadata:
   name: {{ .Values.name }}
 data:
   CHANNEL: {{ .Values.configmap.CHANNEL }}
-  CONNECTION_NAME: {{ .Values.configmap.CONNECTION_NAME }}
   QM: {{ .Values.configmap.QM }}
   QUEUE_NAME: {{ .Values.configmap.QUEUE_NAME }}
   APP_NAME: {{ .Values.configmap.APP_NAME }}

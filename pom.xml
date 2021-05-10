@@ -104,7 +104,8 @@
           </execution>
         </executions>
 		<configuration>
-		  <jvmArgs>-DHOST=localhost -DPORT=1414 -DCHANNEL=DEV.APP.SVRCONN -DQM=QM1 -DUSER=app -DPASSWORD=passw0rd -DQUEUE_NAME=DEV.QUEUE.1</jvmArgs>
+		  <jvmArgs>-DHOST=localhost -DPORT=1414 -DCHANNEL=IBM.APP.SVRCONN -DQM=QM1 -DUSER=mqapp -DPASSWORD=mqapp -DQUEUE_NAME=IBM.DEMO.Q -DCLIENT_SSL_KEY_STORE="ibm-rest-server.jks" -DCLIENT_SSL_KEY_STORE_PASSWORD=passw0rd -DCLIENT_SSL_TRUST_STORE="ibm-ca.jks" -DCLIENT_SSL_TRUST_STORE_PASSWORD=passw0rd</jvmArgs>
+<!-- 		  <jvmArgs>-DHOST=localhost -DPORT=1414 -DCHANNEL=IBM.APP.SVRCONN -DQM=QM1 -DUSER=mqapp -DPASSWORD=mqapp -DQUEUE_NAME=IBM.DEMO.Q -Djavax.net.ssl.keyStore="ibm-rest-server.jks" -Djavax.net.ssl.keyStorePassword=passw0rd -Djavax.net.ssl.trustStore="ibm-ca.jks" -Djavax.net.ssl.trustStorePassword=passw0rd</jvmArgs> -->
 		</configuration>          
       </plugin>
       <plugin>
