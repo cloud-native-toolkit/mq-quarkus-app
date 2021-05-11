@@ -2,14 +2,14 @@
 # Declare variables to be passed into your templates.
 global: {}
 
-name: mq-quarkus-app
+name: mq-quarkus-app-prod
 
 replicaCount: 1
 logLevel: "debug"
 
 image:
-  repository: replace
-  tag: replace
+  repository:  image-registry.openshift-image-registry.svc:5000/ci/mq-quarkus-app
+  tag: 0.0.7
   pullPolicy: IfNotPresent
   port: 8080
 
@@ -64,8 +64,8 @@ sealedsecret:
   isScopeClusterWide: "true"
 
 certs:
-  volumeName: certs  
-  certSecretName: mq-client-jks 
+  volumeName: certs
+  certSecretName: mq-client-jks
   certPasswordSecretName: mq-client-jks-password
   volumeMountPath: "/certs"
   trustStoreFileName: truststore.jks
