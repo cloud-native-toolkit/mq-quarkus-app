@@ -201,6 +201,22 @@ Assumes that any ConfigMaps, Secrets that the deployment needs already exist.
 * Openshift/Kubernetes resource files get generated in the /target/kubernetes folder.
 
 
+## Sealed Secrets
+
+The app gets deployed using a helm chart which is included in this repo.
+The app depends on a secret called `mq-quarkus-app` that contains a two key value pairs
+called USER and PASSWORD which contains the info to authenticate with the MQ server.
+We are using Sealed Secrets to create the secret (https://github.com/bitnami-labs/sealed-secrets).
+The way sealed secrets work is, you create the sealed secret resource in the kube/openshift namespace
+and the operator will generate the acutual secret.
+The command used to create the sealed secret is:
+```
+kubeseal --scope cluster-wide --controller-name=sealedsecretcontroller-sealed-secrets --controller-namespace=sealed-secrets -o yaml < mq-quarkus-app.yaml
+```
+
+In this particular case, the sealed secret created has a cluster-wide scope.
+To further lock down the setup and enhance security, you can create the sealed secret with a namespace scope.
+See docs to better understand this.
 
 ## Next Steps
 * Learn more about [Quarkus](https://quarkus.io/).
