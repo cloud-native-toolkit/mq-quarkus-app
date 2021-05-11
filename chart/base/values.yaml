@@ -2,7 +2,7 @@
 # Declare variables to be passed into your templates.
 global: {}
 
-name: mq-quarkus-app
+name: mq-quarkus-app-staging
 
 replicaCount: 1
 logLevel: "debug"
@@ -64,8 +64,8 @@ sealedsecret:
   isScopeClusterWide: "true"
 
 certs:
-  volumeName: certs  
-  certSecretName: mq-client-jks 
+  volumeName: certs
+  certSecretName: mq-client-jks
   certPasswordSecretName: mq-client-jks-password
   volumeMountPath: "/certs"
   trustStoreFileName: truststore.jks
