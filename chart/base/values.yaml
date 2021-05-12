@@ -9,7 +9,7 @@ logLevel: "debug"
 
 image:
   repository:  image-registry.openshift-image-registry.svc:5000/ci/mq-quarkus-app
-  tag: 0.0.7
+  tag: 0.0.8
   pullPolicy: IfNotPresent
   port: 8080
 
