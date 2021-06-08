@@ -204,19 +204,28 @@ Assumes that any ConfigMaps, Secrets that the deployment needs already exist.
 ## Sealed Secrets
 
 The app gets deployed using a helm chart which is included in this repo.
-The app depends on a secret called `mq-quarkus-app` that contains a two key value pairs
-called USER and PASSWORD which contains the info to authenticate with the MQ server.
+The app depends on a secret called `mq-quarkus-app` that contains two key value pairs
+called `USER` and `PASSWORD` which contain the info to authenticate the client app with the MQ server.
 We are using Sealed Secrets to create the secret (https://github.com/bitnami-labs/sealed-secrets).
-The way sealed secrets work is, you create the sealed secret resource in the kube/openshift namespace
-and the operator will generate the acutual secret.
-The command used to create the sealed secret is:
+The way sealed secrets work is, you create the sealed secret resource in the target kube/openshift namespace
+and the operator will generate the actual secret.
+
+Create a kube secret file with the unencrypted values as follows:
+
 ```
-kubeseal --scope cluster-wide --controller-name=sealedsecretcontroller-sealed-secrets --controller-namespace=sealed-secrets -o yaml < mq-quarkus-app.yaml
+oc create secret generic mq-quarkus-app --from-literal=USER=<user-name> --from-literal=PASSWORD=<password> --dry-run=true -o yaml > mq-quarkus-app.yaml
 ```
+
+Then generate the encrypted values using the kubeseal cli as follows:
+
+```
+kubeseal --scope cluster-wide --controller-name=sealedsecretcontroller-sealed-secrets --controller-namespace=sealed-secrets -o yaml < mq-quarkus-app.yaml > mq-quarkus-app-enc.yaml
+```
+The file mq-quarkus-app-enc.yaml`  will contain the encrypted values to modify  USERand PASSWORD in  chart/base/values.yaml.
 
 In this particular case, the sealed secret created has a cluster-wide scope.
 To further lock down the setup and enhance security, you can create the sealed secret with a namespace scope.
-See docs to better understand this.
+See kubbeseal docs to better understand this.
 
 ## Next Steps
 * Learn more about [Quarkus](https://quarkus.io/).
