@@ -7,12 +7,15 @@ import javax.jms.JMSConsumer;
 import javax.jms.JMSContext;
 import javax.jms.JMSException;
 import javax.jms.JMSProducer;
+import javax.jms.Queue;
+import javax.jms.QueueBrowser;
 import javax.jms.TextMessage;
 
 import org.eclipse.microprofile.config.inject.ConfigProperty;
-import org.slf4j.LoggerFactory;
 import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
+import com.ibm.mqclient.config.QueueStatus;
 import com.ibm.msg.client.jms.JmsConnectionFactory;
 import com.ibm.msg.client.jms.JmsFactoryFactory;
 import com.ibm.msg.client.wmq.WMQConstants;
@@ -56,11 +59,42 @@ final public class MyJMSTemplate {
 	private static String appName;
 
 	final Logger LOG = LoggerFactory.getLogger(MyJMSTemplate.class);
-	
+
 	public MyJMSTemplate() {
 		super();
 		// TODO Auto-generated constructor stub
 		// Create a connection factory
+	}
+
+	public QueueStatus getQueueStatus() throws JMSException {
+
+		QueueStatus status = new QueueStatus();
+		status.setQueueAvailable(false);
+
+		JMSContext context = null;
+		Queue queue = null;
+		QueueBrowser browser = null;
+
+		try {
+			JmsConnectionFactory cf = getJMSConectionFactory();
+
+			// Create JMS objects
+			context = cf.createContext();
+			queue = context.createQueue("queue:///" + mqQueueName);
+			browser = context.createBrowser(queue);
+
+			status.setQueueAvailable(true);
+			status.setQueueName(browser.getQueue().getQueueName());
+			status.setHasMessages(browser.getEnumeration().hasMoreElements());
+			
+			browser.close();
+			context.close();
+		} catch (Throwable e) {
+			e.printStackTrace();
+			status.setQueueAvailable(false);
+		}
+		
+		return status;
 	}
 
 	public void send(String strToSend) throws JMSException {
@@ -86,11 +120,11 @@ final public class MyJMSTemplate {
 		}
 	}
 
-	public String receiveMessage() throws JMSException {		
+	public String receiveMessage() throws JMSException {
 		JMSContext context = null;
 		Destination destination = null;
 		JMSConsumer consumer = null;
-		
+
 		try {
 			JmsConnectionFactory cf = getJMSConectionFactory();
 
@@ -98,8 +132,7 @@ final public class MyJMSTemplate {
 			context = cf.createContext();
 			destination = context.createQueue("queue:///" + mqQueueName);
 			consumer = context.createConsumer(destination); // autoclosable
-			
-			
+
 			String receivedMessage = consumer.receiveBody(String.class, 15000); // in ms or 15 seconds
 			LOG.debug("\nReceived message:\n {}", receivedMessage);
 			return receivedMessage;
