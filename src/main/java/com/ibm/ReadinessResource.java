@@ -29,7 +29,7 @@ public class ReadinessResource implements HealthCheck {
 		}
 
 		return HealthCheckResponse.builder()
-				.name("qm-liveness-check")
+				.name("qm-readiness-check")
 				.withData("queueName", status.getQueueName())
 				.withData("hasMessages", status.hasMessages())
 				.state(status.isQueueAvailable())
