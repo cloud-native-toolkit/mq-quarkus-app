@@ -57,12 +57,22 @@ spec:
               protocol: TCP
           livenessProbe:
             httpGet:
-              path: /
-              port: http
+              path: /q/health/live
+              port: {{ .Values.image.port }}
+              scheme: HTTP
+            timeoutSeconds: 10
+            periodSeconds: 30
+            successThreshold: 1
+            failureThreshold: 3
           readinessProbe:
             httpGet:
-              path: /
-              port: http
+              path: /q/health/ready
+              port: {{ .Values.image.port }}
+              scheme: HTTP
+            timeoutSeconds: 10
+            periodSeconds: 30
+            successThreshold: 1
+            failureThreshold: 3
           env:
             - name: INGRESS_HOST
               value: ""
